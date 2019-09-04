@@ -15,7 +15,7 @@ variable "dnsPrefix" {
 }
 
 variable "client_id" {
-  default = "5a3xxxxxx"
+  default = "360xxxxxxxxx"
 }
 
 variable "client_secret" {}
