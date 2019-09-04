@@ -26,7 +26,9 @@ resource "azurerm_virtual_network" "vNetwork" {
   }
 }
 
-#Create a container registry
+#Create a container registry storage account (only for Classic SKU, deprecated)
+
+/*
 resource "azurerm_storage_account" "storacc" {
   name                     = "stor${random_string.randomName.result}"
   resource_group_name      = "${data.azurerm_resource_group.Rg.name}"
@@ -34,15 +36,16 @@ resource "azurerm_storage_account" "storacc" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
   tags                     = "${data.azurerm_resource_group.Rg.tags}"
-}
+} */
 
 resource "azurerm_container_registry" "cr" {
   name                = "cr${random_string.randomName.result}"
   resource_group_name = "${data.azurerm_resource_group.Rg.name}"
   location            = "${data.azurerm_resource_group.Rg.location}"
   admin_enabled       = true
-  sku                 = "Classic"
-  storage_account_id  = "${azurerm_storage_account.storacc.id}"
+  sku                 = "Basic"
+
+  # storage_account_id  = "${azurerm_storage_account.storacc.id}" (only for Classic SKU, deprecated atm)
 }
 
 resource "azurerm_kubernetes_cluster" "k8sClu" {
